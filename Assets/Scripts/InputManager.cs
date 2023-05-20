@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
             return;
         }
 
-        statusText.text = $"Press a {actionToRebind.expectedControlType}";
+        statusText.text = $"Press a button";
 
         actionToRebind.Disable();
 

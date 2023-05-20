@@ -5,11 +5,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem.Utilities;
 
 public class ReBindUI : MonoBehaviour
 {
     [SerializeField]
     private InputActionReference inputActionReference;
+
+    [SerializeField]
+    private string actionNameOverride;
 
     [SerializeField]
     private bool excludeMouse = true;
@@ -42,6 +46,17 @@ public class ReBindUI : MonoBehaviour
 
     [SerializeField]
     private Button resetButton;
+
+    private List<string> PossibleBindings()
+    {
+        var list = new List<string>();
+
+        foreach (var binding in inputActionReference.action.bindings) {
+            list.Add(binding.name);
+        }
+
+        return list;
+    }
 
     private void OnEnable()
     {
@@ -90,6 +105,10 @@ public class ReBindUI : MonoBehaviour
     {
         if (actionText != null) {
             actionText.text = actionName;
+            if (actionNameOverride != null && actionNameOverride != "")
+            {
+                actionText.text = actionNameOverride;
+            }
         }
 
         if (rebindText != null) {
