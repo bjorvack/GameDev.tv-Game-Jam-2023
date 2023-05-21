@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 10f;
 
+    public static event Action dimensionHop;
+
     private void Start()
     {
         gameActions = InputManager.inputActions;
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private void DoDimensionHop(InputAction.CallbackContext obj)
     {
-       Debug.Log("Dimension Hop!");
+        dimensionHop?.Invoke();
     }
 
     private void DoMove(InputAction.CallbackContext obj)
