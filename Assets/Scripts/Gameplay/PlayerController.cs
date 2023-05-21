@@ -25,9 +25,15 @@ public class PlayerController : MonoBehaviour
 
         gameActions.Game.Jump.started += DoJump;
         gameActions.Game.Move.performed += DoMove;
+        gameActions.Game.Dimensionhop.started += DoDimensionHop;
         gameActions.Game.Enable();
 
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void DoDimensionHop(InputAction.CallbackContext obj)
+    {
+       Debug.Log("Dimension Hop!");
     }
 
     private void DoMove(InputAction.CallbackContext obj)
