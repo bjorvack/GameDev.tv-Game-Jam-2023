@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 1265185660}
   - component: {fileID: 1265185659}
   - component: {fileID: 1265185662}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SingleDimensionObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 1901806047}
   - component: {fileID: 1901806046}
   - component: {fileID: 1901806045}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SingleDimensionObject (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

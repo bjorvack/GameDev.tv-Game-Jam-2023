@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private CapsuleCollider2D collider;
+
     [SerializeField] 
     private Transform feetTransform;
 
@@ -34,12 +36,23 @@ public class PlayerController : MonoBehaviour
         gameActions.Game.Enable();
 
         rb = GetComponent<Rigidbody2D>();
+        collider = GetComponent<CapsuleCollider2D>();
     }
 
     private void DoDimensionHop(InputAction.CallbackContext obj)
     {
         // Check if currently inside a trigger for the oposite dimension
         // If true don't do a dimension hop
+        if (collider.IsTouchingLayers(LayerMask.GetMask("Dimension - Blue")) && currentDimension == Dimension.Red)
+        {
+            return;
+        }
+
+        if (collider.IsTouchingLayers(LayerMask.GetMask("Dimension - Red")) && currentDimension == Dimension.Blue)
+        {
+            return;
+        }
+
 
         Debug.Log("Do dimension hop");
         switch (currentDimension)
@@ -66,11 +79,21 @@ public class PlayerController : MonoBehaviour
 
     private void DoJump(InputAction.CallbackContext obj)
     {
+        bool touchingGroundLayer = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
+        Debug.Log("Touching Ground Layer: " + touchingGroundLayer);
+
+        bool touchingBlueDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Blue"));
+        Debug.Log("Touching Blue Dimension: " + touchingBlueDimension);
+
+        bool touchingRedDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Red"));
+        Debug.Log("Touching Red Dimension: " + touchingRedDimension);
+
         // Only jump if the feet off the player are touching the ground Layer
-        if (Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground")) ||
-            Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Red")) ||
-            Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Blue"))
+        if (touchingGroundLayer ||
+            (touchingRedDimension && currentDimension == Dimension.Red) ||
+            (touchingBlueDimension && currentDimension == Dimension.Blue)
         ) {
+            Debug.Log("Jump");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
