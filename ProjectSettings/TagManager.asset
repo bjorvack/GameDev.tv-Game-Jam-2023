@@ -14,7 +14,7 @@ TagManager:
   - Ground
   - Dimension - Red
   - Dimension - Blue
-  - 
+  - Background
   - 
   - 
   - 
@@ -40,4 +40,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background - Far
+    uniqueID: 18985615
+    locked: 0
+  - name: Background - Middle
+    uniqueID: 1670567303
+    locked: 0
+  - name: Background - Close
+    uniqueID: 2936162023
+    locked: 0
+  - name: Buildings
+    uniqueID: 3865519329
+    locked: 0
+  - name: Platforms
+    uniqueID: 1906771053
+    locked: 0
+  - name: Player
+    uniqueID: 1479561177
     locked: 0
