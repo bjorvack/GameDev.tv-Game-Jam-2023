@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 276041457230871561, guid: 1e8dee8a16fdec6428dd94ed159402fa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 394.24548
       objectReference: {fileID: 0}
     - target: {fileID: 276041457230871561, guid: 1e8dee8a16fdec6428dd94ed159402fa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -941,7 +941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5711452757685870366, guid: 1e8dee8a16fdec6428dd94ed159402fa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 394.24548
       objectReference: {fileID: 0}
     - target: {fileID: 5711452757685870366, guid: 1e8dee8a16fdec6428dd94ed159402fa, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1533,7 +1533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9208914453521662958, guid: 1e8dee8a16fdec6428dd94ed159402fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.000061035156
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1592,7 +1592,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.078431375, b: 0.078431375, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

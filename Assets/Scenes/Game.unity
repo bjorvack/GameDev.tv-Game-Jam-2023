@@ -230,6 +230,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: level-1
       objectReference: {fileID: 0}
+    - target: {fileID: -7936448264968714417, guid: dccef11fa3abac1428c2232d37b3a4ce, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7936448264968714417, guid: dccef11fa3abac1428c2232d37b3a4ce, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1906771053
+      objectReference: {fileID: 0}
     - target: {fileID: -7877348663481055505, guid: dccef11fa3abac1428c2232d37b3a4ce, type: 3}
       propertyPath: m_Layer
       value: 6
