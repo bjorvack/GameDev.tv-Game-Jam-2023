@@ -14,7 +14,13 @@ public class PlayerController : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    // Animation states
     private Animator animator;
+    private string currentAnimationState;
+
+    const string PLAYER_IDLE = "Player - Idle";
+    const string PLAYER_RUN = "Player - Run";
+    const string PLAYER_JUMP = "Player - Jump";
 
     [SerializeField] 
     private Transform feetTransform;
@@ -47,10 +53,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (IsTouchingSolidGround() && animator.GetBool("Jump"))
-        {
-            animator.SetBool("Jump", false);
-        }
     }
 
     private void DoDimensionHop(InputAction.CallbackContext obj)
@@ -90,14 +92,20 @@ public class PlayerController : MonoBehaviour
         Vector2 moveInput = obj.ReadValue<Vector2>();
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
 
+        if (currentAnimationState != PLAYER_JUMP || IsTouchingSolidGround())
+        {
+            ChangeAnimationState(PLAYER_IDLE);
+        }
 
-        spriteRenderer.transform.localScale = new Vector3(
-            Mathf.Abs(spriteRenderer.transform.localScale.x) * (moveInput.x < 0f ? -1f : 1f),
-            spriteRenderer.transform.localScale.y,
-            spriteRenderer.transform.localScale.z
-        );
-
-        animator.SetBool("Running", Mathf.Abs(rb.velocity.x) > 0);
+        if (moveInput.x != 0f)
+        {
+            ChangeAnimationState(PLAYER_RUN);
+            spriteRenderer.transform.localScale = new Vector3(
+                Mathf.Abs(spriteRenderer.transform.localScale.x) * (moveInput.x < 0f ? -1f : 1f),
+                spriteRenderer.transform.localScale.y,
+                spriteRenderer.transform.localScale.z
+            );
+        }        
     }
 
     private bool IsTouchingSolidGround()
@@ -128,8 +136,23 @@ public class PlayerController : MonoBehaviour
         if (IsTouchingSolidGround()) {
             Debug.Log("Jump");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            animator.SetBool("Jump", true);
+
+            ChangeAnimationState(PLAYER_JUMP);
         }
+    }
+
+    private void ChangeAnimationState(string newState)
+    {
+        if (currentAnimationState == newState) return;
+        animator.Play(newState);
+        currentAnimationState = newState;
+    }
+
+    // Check if a specific animation is playing
+    private bool isAnimationPlaying(Animator animator, string stateName)
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
     }
 
     private void OnDrawGizmos()
