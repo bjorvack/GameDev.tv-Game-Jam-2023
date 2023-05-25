@@ -8,14 +8,23 @@ namespace SuperTiled2Unity
         [ReadOnly]
         public string m_ImageFilename;
 
+        private float? initialSize;
+
         private void Start()
         {
             Debug.Log("Repeating pattern");
 
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             spriteRenderer.drawMode = SpriteDrawMode.Tiled;
+            float size = spriteRenderer.size.x;
+            if (initialSize == null)
+            {
+                initialSize = spriteRenderer.size.x;
+            }
+
+            size = (float)initialSize;
             spriteRenderer.size = new Vector2(
-                spriteRenderer.size.x * 1000f,
+                size * 1000f,
                 spriteRenderer.size.y
             );
 

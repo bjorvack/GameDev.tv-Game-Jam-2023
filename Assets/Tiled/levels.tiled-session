@@ -32,7 +32,7 @@
         }
     },
     "frame.defaultDuration": 100,
-    "last.imagePath": "/Users/bjorn/Projects/GameDev.tv-Game-Jam-2023/Assets/Images/Environment/background",
+    "last.imagePath": "/Users/bjorn/Projects/GameDev.tv-Game-Jam-2023/Assets/Images/Environment",
     "map.fixedSize": false,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
@@ -52,5 +52,5 @@
         "height": 16,
         "width": 16
     },
-    "tileset.type": 1
+    "tileset.type": 0
 }

@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     private CapsuleCollider2D collider;
 
+    private SpriteRenderer spriteRenderer;
+
     [SerializeField] 
     private Transform feetTransform;
 
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<CapsuleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void DoDimensionHop(InputAction.CallbackContext obj)
@@ -75,6 +78,13 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 moveInput = obj.ReadValue<Vector2>();
         rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+
+
+        spriteRenderer.transform.localScale = new Vector3(
+            Mathf.Abs(spriteRenderer.transform.localScale.x) * (moveInput.x < 0f ? -1f : 1f),
+            spriteRenderer.transform.localScale.y,
+            spriteRenderer.transform.localScale.z
+        );
     }
 
     private void DoJump(InputAction.CallbackContext obj)
