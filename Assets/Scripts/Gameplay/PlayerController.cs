@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
+    private Animator animator;
+
     [SerializeField] 
     private Transform feetTransform;
 
@@ -40,6 +42,15 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        if (IsTouchingSolidGround() && animator.GetBool("Jump"))
+        {
+            animator.SetBool("Jump", false);
+        }
     }
 
     private void DoDimensionHop(InputAction.CallbackContext obj)
@@ -85,9 +96,11 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.transform.localScale.y,
             spriteRenderer.transform.localScale.z
         );
+
+        animator.SetBool("Running", Mathf.Abs(rb.velocity.x) > 0);
     }
 
-    private void DoJump(InputAction.CallbackContext obj)
+    private bool IsTouchingSolidGround()
     {
         bool touchingGroundLayer = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
         Debug.Log("Touching Ground Layer: " + touchingGroundLayer);
@@ -98,13 +111,24 @@ public class PlayerController : MonoBehaviour
         bool touchingRedDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Red"));
         Debug.Log("Touching Red Dimension: " + touchingRedDimension);
 
-        // Only jump if the feet off the player are touching the ground Layer
         if (touchingGroundLayer ||
             (touchingRedDimension && currentDimension == Dimension.Red) ||
             (touchingBlueDimension && currentDimension == Dimension.Blue)
-        ) {
+        )
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void DoJump(InputAction.CallbackContext obj)
+    {      
+        // Only jump if the feet off the player are touching the ground Layer
+        if (IsTouchingSolidGround()) {
             Debug.Log("Jump");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            animator.SetBool("Jump", true);
         }
     }
 

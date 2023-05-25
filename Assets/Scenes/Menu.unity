@@ -261,7 +261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4531242098307089853, guid: b61838f251245264eb7524d71145cc05, type: 3}
       propertyPath: m_text
-      value: Settigns
+      value: Settings
       objectReference: {fileID: 0}
     - target: {fileID: 4531242098307089853, guid: b61838f251245264eb7524d71145cc05, type: 3}
       propertyPath: m_fontSize
