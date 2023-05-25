@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="1" nextlayerid="6" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="1" nextlayerid="9" nextobjectid="1">
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="385" source="objects.tsx"/>
- <layer id="1" name="buildings" width="30" height="20">
+ <imagelayer id="6" name="Background - Far" locked="1" offsetx="0" offsety="-240" parallaxx="3" repeatx="1">
+  <image source="../Images/Environment/background/skyline-a.png" width="256" height="480"/>
+  <properties>
+   <property name="unity:Layer" value="Background"/>
+   <property name="unity:SortingLayer" value="Background - Far"/>
+   <property name="unity:tag" value="Parallax"/>
+  </properties>
+ </imagelayer>
+ <imagelayer id="7" name="Background - Middle" locked="1" offsetx="0" offsety="-8" parallaxx="2" repeatx="1">
+  <image source="../Images/Environment/background/buildings-bg.png" width="288" height="248"/>
+  <properties>
+   <property name="unity:Layer" value="Background"/>
+   <property name="unity:SortingLayer" value="Background - Middle"/>
+   <property name="unity:tag" value="Parallax"/>
+  </properties>
+ </imagelayer>
+ <imagelayer id="8" name="Background - Close" locked="1" offsetx="0" offsety="-178" parallaxx="1.5" repeatx="1">
+  <image source="../Images/Environment/background/near-buildings-bg.png" width="986" height="418"/>
+  <properties>
+   <property name="unity:Layer" value="Background"/>
+   <property name="unity:SortingLayer" value="Background - Close"/>
+   <property name="unity:tag" value="Parallax"/>
+  </properties>
+ </imagelayer>
+ <layer id="1" name="buildings" width="30" height="20" offsetx="1" offsety="-16">
+  <properties>
+   <property name="unity:SortingLayer" value="Buildings"/>
+  </properties>
   <data encoding="csv">
    <chunk x="-16" y="-16" width="16" height="16">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -114,7 +141,10 @@
 </chunk>
   </data>
  </layer>
- <layer id="5" name="objects" width="30" height="20">
+ <layer id="5" name="objects" width="30" height="20" offsetx="1" offsety="-16">
+  <properties>
+   <property name="unity:SortingLayer" value="Platforms"/>
+  </properties>
   <data encoding="csv">
    <chunk x="-16" y="-16" width="16" height="16">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -136,7 +166,11 @@
 </chunk>
   </data>
  </layer>
- <layer id="2" name="platforms" width="30" height="20">
+ <layer id="2" name="platforms" width="30" height="20" offsetx="1" offsety="-16">
+  <properties>
+   <property name="unity:SortingLayer" value="Platforms"/>
+   <property name="unity:layer" value="Ground"/>
+  </properties>
   <data encoding="csv">
    <chunk x="-16" y="-32" width="16" height="16">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
