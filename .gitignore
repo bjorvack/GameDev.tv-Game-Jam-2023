@@ -9,6 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/[Bb]uild_BurstDebugInformation_DoNotShip/
+Build.zip
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
