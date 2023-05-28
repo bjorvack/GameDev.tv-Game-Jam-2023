@@ -18,10 +18,6 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private string currentAnimationState;
 
-    const string PLAYER_IDLE = "Player - Idle";
-    const string PLAYER_RUN = "Player - Run";
-    const string PLAYER_JUMP = "Player - Jump";
-
     [SerializeField] 
     private Transform feetTransform;
 
@@ -30,6 +26,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private float moveSpeed = 10f;
+
+    private Vector2 movementDirection = Vector2.zero;
 
     [SerializeField]
     private Dimension currentDimension;
@@ -53,6 +51,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        bool isTouchingGround = IsTouchingSolidGround();
+        animator.SetBool("onGround", isTouchingGround);
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     private void DoDimensionHop(InputAction.CallbackContext obj)
@@ -89,34 +94,36 @@ public class PlayerController : MonoBehaviour
 
     private void DoMove(InputAction.CallbackContext obj)
     {
-        Vector2 moveInput = obj.ReadValue<Vector2>();
-        rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
+        movementDirection = obj.ReadValue<Vector2>();
+    }
 
-        if (currentAnimationState != PLAYER_JUMP || IsTouchingSolidGround())
-        {
-            ChangeAnimationState(PLAYER_IDLE);
-        }
+    private void Move()
+    {
+        rb.velocity = new Vector2(movementDirection.x * moveSpeed, rb.velocity.y);
 
-        if (moveInput.x != 0f)
+        if (movementDirection.x != 0f)
         {
-            ChangeAnimationState(PLAYER_RUN);
             spriteRenderer.transform.localScale = new Vector3(
-                Mathf.Abs(spriteRenderer.transform.localScale.x) * (moveInput.x < 0f ? -1f : 1f),
+                Mathf.Abs(spriteRenderer.transform.localScale.x) * (movementDirection.x < 0f ? -1f : 1f),
                 spriteRenderer.transform.localScale.y,
                 spriteRenderer.transform.localScale.z
             );
-        }        
+
+            animator.SetBool("isRunning", true);
+        } else
+        {
+            animator.SetBool("isRunning", false);
+        }
     }
 
     private bool IsTouchingSolidGround()
     {
         bool touchingGroundLayer = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
-        Debug.Log("Touching Ground Layer: " + touchingGroundLayer);
-
         bool touchingBlueDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Blue"));
-        Debug.Log("Touching Blue Dimension: " + touchingBlueDimension);
-
         bool touchingRedDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Red"));
+
+        Debug.Log("Touching Ground Layer: " + touchingGroundLayer);
+        Debug.Log("Touching Blue Dimension: " + touchingBlueDimension);
         Debug.Log("Touching Red Dimension: " + touchingRedDimension);
 
         if (touchingGroundLayer ||
@@ -136,23 +143,9 @@ public class PlayerController : MonoBehaviour
         if (IsTouchingSolidGround()) {
             Debug.Log("Jump");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-
-            ChangeAnimationState(PLAYER_JUMP);
+            animator.SetTrigger("isJumping");
+            animator.SetBool("OnGround", false);
         }
-    }
-
-    private void ChangeAnimationState(string newState)
-    {
-        if (currentAnimationState == newState) return;
-        animator.Play(newState);
-        currentAnimationState = newState;
-    }
-
-    // Check if a specific animation is playing
-    private bool isAnimationPlaying(Animator animator, string stateName)
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName) &&
-            animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
     }
 
     private void OnDrawGizmos()
@@ -164,5 +157,10 @@ public class PlayerController : MonoBehaviour
     public Dimension GetDimension()
     {
         return currentDimension;
+    }
+
+    public void Die()
+    {
+        SceneManager.RestartScene();
     }
 }
