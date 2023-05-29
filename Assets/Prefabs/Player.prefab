@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feetTransform: {fileID: 6597941752896818535}
-  jumpForce: 25
+  jumpForce: 35
   moveSpeed: 12
   currentDimension: 0
 --- !u!95 &2954847486674088648

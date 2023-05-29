@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
         collider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        DimensionHop();
     }
 
     private void Update()
@@ -74,7 +76,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        DimensionHop();
+    }
 
+    private void DimensionHop()
+    {
         Debug.Log("Do dimension hop");
         switch (currentDimension)
         {
@@ -138,7 +144,8 @@ public class PlayerController : MonoBehaviour
     }
 
     private void DoJump(InputAction.CallbackContext obj)
-    {      
+    {
+        Debug.Log(IsTouchingSolidGround());
         // Only jump if the feet off the player are touching the ground Layer
         if (IsTouchingSolidGround()) {
             Debug.Log("Jump");
