@@ -124,9 +124,9 @@ public class PlayerController : MonoBehaviour
 
     private bool IsTouchingSolidGround()
     {
-        bool touchingGroundLayer = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Ground"));
-        bool touchingBlueDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Blue"));
-        bool touchingRedDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.1f, LayerMask.GetMask("Dimension - Red"));
+        bool touchingGroundLayer = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.2f, LayerMask.GetMask("Ground"));
+        bool touchingBlueDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.2f, LayerMask.GetMask("Dimension - Blue"));
+        bool touchingRedDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.2f, LayerMask.GetMask("Dimension - Red"));
 
         Debug.Log("Touching Ground Layer: " + touchingGroundLayer);
         Debug.Log("Touching Blue Dimension: " + touchingBlueDimension);
@@ -164,6 +164,17 @@ public class PlayerController : MonoBehaviour
     public Dimension GetDimension()
     {
         return currentDimension;
+    }
+
+    public bool IsTouchingInActiveDimension()
+    {
+        bool touchingBlueDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.2f, LayerMask.GetMask("Dimension - Blue"));
+        bool touchingRedDimension = Physics2D.Raycast(feetTransform.position, Vector2.down, 0.2f, LayerMask.GetMask("Dimension - Red"));
+
+        if (touchingBlueDimension && currentDimension == Dimension.Red) return true;
+        if (touchingRedDimension && currentDimension == Dimension.Blue) return true;
+
+        return false;
     }
 
     public void Die()

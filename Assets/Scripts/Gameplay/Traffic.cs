@@ -12,7 +12,7 @@ public class Traffic : MonoBehaviour
         var rigidBody = GetComponent<Rigidbody2D>();
 
         // Add velocity to the traffic
-        rigidBody.velocity = new Vector2(-1, 0) * m_Speed;
+        rigidBody.velocity = new Vector2(-1, 0) * (m_Speed + Random.Range(-2f, 2f));
         rigidBody.angularVelocity = 0;
     }
 

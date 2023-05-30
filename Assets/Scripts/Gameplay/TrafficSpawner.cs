@@ -12,6 +12,8 @@ public class TrafficSpawner : MonoBehaviour
 
     float m_SpawnTimer = 0.0f;
 
+    float lastSpawn = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +23,12 @@ public class TrafficSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_SpawnTimer += Time.deltaTime;
+        lastSpawn += Time.deltaTime;
 
-        if (m_SpawnTimer > m_SpawnRate)
+        if (lastSpawn > m_SpawnTimer)
         {
-            m_SpawnTimer = 0.0f;
+            m_SpawnTimer = m_SpawnRate + Random.Range(0.1f, 2f);
+            lastSpawn = 0.0f;
             GameObject go = Instantiate(m_Prefab, transform.position, Quaternion.identity);
             go.transform.parent = transform;
         }
