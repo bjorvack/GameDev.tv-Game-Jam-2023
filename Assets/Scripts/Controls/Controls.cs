@@ -53,6 +53,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c6750c6-ef6b-48f7-a895-85ac8b4e9665"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +174,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Dimension hop"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""40ad1e48-2d3b-4031-b0b9-286185e9c750"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cbfa477e-502b-452a-b6f1-df53dec46350"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -199,6 +230,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Game_Move = m_Game.FindAction("Move", throwIfNotFound: true);
         m_Game_Jump = m_Game.FindAction("Jump", throwIfNotFound: true);
         m_Game_Dimensionhop = m_Game.FindAction("Dimension hop", throwIfNotFound: true);
+        m_Game_Shoot = m_Game.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -263,6 +295,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Move;
     private readonly InputAction m_Game_Jump;
     private readonly InputAction m_Game_Dimensionhop;
+    private readonly InputAction m_Game_Shoot;
     public struct GameActions
     {
         private @Controls m_Wrapper;
@@ -270,6 +303,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Game_Move;
         public InputAction @Jump => m_Wrapper.m_Game_Jump;
         public InputAction @Dimensionhop => m_Wrapper.m_Game_Dimensionhop;
+        public InputAction @Shoot => m_Wrapper.m_Game_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -288,6 +322,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Dimensionhop.started += instance.OnDimensionhop;
             @Dimensionhop.performed += instance.OnDimensionhop;
             @Dimensionhop.canceled += instance.OnDimensionhop;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
         }
 
         private void UnregisterCallbacks(IGameActions instance)
@@ -301,6 +338,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Dimensionhop.started -= instance.OnDimensionhop;
             @Dimensionhop.performed -= instance.OnDimensionhop;
             @Dimensionhop.canceled -= instance.OnDimensionhop;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
         }
 
         public void RemoveCallbacks(IGameActions instance)
@@ -341,5 +381,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDimensionhop(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

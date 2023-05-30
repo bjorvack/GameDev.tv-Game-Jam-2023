@@ -32,6 +32,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Dimension currentDimension;
 
+    [SerializeField]
+    private GameObject bullet;
+
+    [SerializeField]
+    private float bulletSpeed = 50f;
+
+    private bool waitingForShootEvent = false;
+    private bool shootEventTriggered = false;
+
+    [SerializeField]
+    private Transform barrel;
+
     public static event Action<Dimension> dimensionChanged;
 
     private void Start()
@@ -41,6 +53,7 @@ public class PlayerController : MonoBehaviour
         gameActions.Game.Jump.started += DoJump;
         gameActions.Game.Move.performed += DoMove;
         gameActions.Game.Dimensionhop.started += DoDimensionHop;
+        gameActions.Game.Shoot.started += DoShoot;
         gameActions.Game.Enable();
 
         rb = GetComponent<Rigidbody2D>();
@@ -60,6 +73,34 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void DoShoot(InputAction.CallbackContext obj)
+    {
+        StartCoroutine(Shoot());
+    }
+
+    public IEnumerator Shoot()
+    {
+        waitingForShootEvent = true;
+        animator.SetTrigger("isShooting");
+
+        while (!shootEventTriggered)
+        {
+            yield return null;
+        }
+
+        shootEventTriggered = false;
+        waitingForShootEvent = false;
+
+        GameObject go = Instantiate(bullet, barrel.position, Quaternion.identity);
+        go.GetComponent<Rigidbody2D>().velocity = new Vector3(
+            bulletSpeed * transform.localScale.x,
+            0,
+            0
+        );
+        go.transform.localScale = transform.localScale;
+        go.transform.parent = transform;
     }
 
     private void DoDimensionHop(InputAction.CallbackContext obj)
@@ -175,6 +216,14 @@ public class PlayerController : MonoBehaviour
         if (touchingRedDimension && currentDimension == Dimension.Blue) return true;
 
         return false;
+    }
+
+    public void OnAnimatorShootEvent()
+    {
+        if (waitingForShootEvent)
+        {
+            shootEventTriggered = true;
+        }
     }
 
     public void Die()
